@@ -42,5 +42,5 @@ python -m torch.distributed.run \
     --variance_focus 0.85 \
     --cutflip=False \
     --save_last_model \
-    --encoder VIT-14 \
+    --encoder VIT-16 \
     --exp_name DAR_nyu \

@@ -43,5 +43,6 @@ python -m torch.distributed.run \
     --finetune_on_another_dataset False \
     --variance_focus 0.85 \
     --save_last_mopdel \
+    --encoder VIT-16 \
     --exp_name DAR_kitti
 
