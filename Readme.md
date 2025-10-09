@@ -69,7 +69,7 @@ kitti
 
 Download the v1-5 checkpoint of [stable-diffusion](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.ckpt) and put it in the `<repo root>/checkpoints` directory. Please create an empty directory if you find that such a path does not exist. 
 
-- (Optional) If you need to load model weights of pretrained visual backbones **locally**. You can download the backbone repository (e.g., dinov2) and put it in the `<repo root>/tools`. Notebly, model weights are recommanded to be at `<repo root>/checkpoints` directory. 
+- (Optional) If you need to load model weights of pretrained visual backbones **locally**. You can download the backbone repository (e.g., dinov2 or ViT of CLIP) and put it in the `<repo root>/tools`. Notebly, model weights are recommanded to be at `<repo root>/checkpoints` directory. 
 
 ## Training 
 We recommend using 8 NVIDIA A100 GPUs to train the model with a total batch size of 32. Inside the `train_{kitti,nyu}.sh` set the `NPROC_PER_NODE` variable and `--batch_size` argument to the desired values as per your system resources. For our method we set them as `NPROC_PER_NODE=8` and `--batch_size=4` (resulting in a total batch size of 32). Run the following instuction to train the DAR model:
@@ -80,6 +80,24 @@ We recommend using 8 NVIDIA A100 GPUs to train the model with a total batch size
 1. **Train on KITTI dataset**:  
 `bash train_kitti.sh`
 
+### Contact
+
+If you have any questions, please feel free to contact [wangjinhong@zju.edu.cn](wangjinhong@zju.edu.cn).
 
 
+### Acknowledgment
+
+Thanks to the codebase of [BTS](https://github.com/cleinc/bts), [NeWCRFS](https://github.com/aliyun/NeWCRFs), [IEbins](https://github.com/ShuweiShao/IEBins), [EcoDepth](https://github.com/depth-ar/EcoDepth), [VAR](https://github.com/FoundationVision/VAR).
+
+### BibTeX (Citation)
+If you find our work useful in your research, please consider citing using:
+``` bibtex
+@InProceedings{wang2025scalable,
+  title={Scalable autoregressive monocular depth estimation},
+  author={Wang, Jinhong and Liu, Jian and Tang, Dongqi and Wang, Weiqiang and Li, Wentong and Chen, Danny and Chen, Jintai and Wu, Jian},
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={6262--6272},
+  year={2025}
+}
+```
 

@@ -148,9 +148,15 @@ class FrozenCLIPEmbedder(AbstractEncoder):
 
        
         print(f"\nLoading {version} to CLIPTextModel.....\n")
-        self.tokenizer = CLIPTokenizer.from_pretrained("/root/hy58/caijin/huggingface_hub/openai_clip", local_files_only = True)
+
+        ### load locally 
+        # self.tokenizer = CLIPTokenizer.from_pretrained("../tools/huggingface_hub/openai_clip", local_files_only = True)
+        # self.transformer = CLIPTextModel.from_pretrained("../tools/huggingface_hub/openai_clip", local_files_only = True)
+
+        ### load online
+        self.tokenizer = CLIPTokenizer.from_pretrained(version)
         print(f"\nLoading {version} to CLIPTextModel.....\n")
-        self.transformer = CLIPTextModel.from_pretrained("/root/hy58/caijin/huggingface_hub/openai_clip", local_files_only = True)
+        self.transformer = CLIPTextModel.from_pretrained(version)
         print(f"\nLoaded {version} to CLIPTextModel.....\n")
 
         self.device = device
