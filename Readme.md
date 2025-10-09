@@ -1,6 +1,7 @@
-# Scalable Autoregressive Monocular Depth Estimation
-
 <div align="center">
+<h1>Scalable Autoregressive Monocular Depth Estimation</h1>
+
+
 **CVPR 2025**  
 <a href='https://depth-ar.github.io/' style="margin-right: 20px;"><img src='https://img.shields.io/badge/Project Page-DAR-darkgreen' alt='Project Page'></a>
 <a href="https://arxiv.org/abs/2411.11361" style="margin-right: 20px;"><img src='https://img.shields.io/badge/Paper-arXiv-maroon' alt='arXiv page'></a>
