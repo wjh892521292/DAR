@@ -9,7 +9,7 @@ export CUBLAS_WORKSPACE_CONFIG=:4096:8
 export PYTHONWARNINGS="ignore:Unverified HTTPS request"
 
 PYTHONPATH="$(dirname $0)/..":"$(dirname $0)/../stable-diffusion":$PYTHONPATH \
-/ossfs/workspace/hy58/caijin/envs/ecodepth/bin/python -m torch.distributed.run \
+python -m torch.distributed.run \
     --standalone \
     --nnodes=1 \
     --rdzv_backend=c10d \
@@ -18,7 +18,7 @@ PYTHONPATH="$(dirname $0)/..":"$(dirname $0)/../stable-diffusion":$PYTHONPATH \
     train.py \
     --batch_size 4 \
     --dataset nyudepthv2 \
-    --data_path /ossfs/workspace/ts/wangjinhong/data/nyu \
+    --data_path /.../nyu \
     --weight_decay 0.1 \
     --num_filters 32 32 32 \
     --deconv_kernels 2 2 2 \
@@ -33,7 +33,7 @@ PYTHONPATH="$(dirname $0)/..":"$(dirname $0)/../stable-diffusion":$PYTHONPATH \
     --learning_rate_schedule one_cycle \
     --gradient_accumulation False \
     --epochs 100 \
-    --log_dir /ossfs/workspace/hy65/caijin/result/DAR_rebuttal/models/nyu \
+    --log_dir /.../nyu \
     --log_in_wandb False \
     --eigen_crop_in_dataloader_itself_for_nyu False \
     --min_depth_eval 1e-3 \
@@ -43,4 +43,4 @@ PYTHONPATH="$(dirname $0)/..":"$(dirname $0)/../stable-diffusion":$PYTHONPATH \
     --cutflip=False \
     --save_last_model \
     --encoder VIT-14 \
-    --exp_name DAR_nyu_eco_best_reproduct2_2b \
+    --exp_name DAR_nyu \
