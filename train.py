@@ -12,7 +12,6 @@ import torch.backends.cudnn as cudnn
 from tensorboardX import SummaryWriter
 
 
-# from models.model2 import EcoDepth as MyModel
 from models.model import DAR as MyModel
 
 
