@@ -14,7 +14,7 @@ python -m torch.distributed.run \
     --nnodes=1 \
     --rdzv_backend=c10d \
     --rdzv_endpoint=localhost:1234 \
-    --nproc_per_node=8 \
+    --nproc_per_node=${NPROC_PER_NODE} \
     train.py \
     --batch_size 4 \
     --dataset nyudepthv2 \

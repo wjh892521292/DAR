@@ -14,7 +14,7 @@ python -m torch.distributed.run \
     --rdzv_endpoint=localhost:1234 \
     --nproc_per_node=${NPROC_PER_NODE} \
     train.py \
-    --batch_size 8 \
+    --batch_size 4 \
     --dataset kitti \
     --data_path /.../kitti \
     --weight_decay 0.1 \

@@ -375,14 +375,11 @@ class AutoregressiveDepth(nn.Module):
         index_iter = 0
         
     
-        # print(input_hidden.shape)
         memory = torch.flatten(input_hidden, 2).transpose(1, 2)  #1536, 16, 20
 
-        # print(memory.shape)
 
         next_tokens = self.query_tokens.repeat(b, 1, 1)
 
-       
         token_seq = next_tokens
 
         for i in range(0, seq_len):
@@ -395,18 +392,13 @@ class AutoregressiveDepth(nn.Module):
 
             tgt_mask = self.mask_generate(patch_list[:i+1]).cuda()
       
-
-
             ph, pw = patch_list[i]
-
-        
 
             output = self.transdecoder(token_seq, memory, tgt_mask=tgt_mask)
             output = output[:, (-ph*pw):, :]
           
             output_maps = output[:, :, :].transpose(1, 2).view(b, -1, ph, pw) # b, 1024, ph, pw
             next_maps = output_maps
-
 
             output_maps = self.decoder(output_maps) #b, 128, 8*ph, 8*pw
 
@@ -433,13 +425,11 @@ class AutoregressiveDepth(nn.Module):
             label_target_bin_left = pred_label
 
             left_min = torch.zeros_like(label_target_bin_left)
-            # target_bin_left = torch.gather(bin_edges, 1, max(0, label_target_bin_left-1))
             target_bin_left = torch.gather(bin_edges, 1, torch.clamp_min(label_target_bin_left-2, left_min))
 
             label_target_bin_right = (pred_label.float() + 1).long()
 
             right_max = torch.ones_like(label_target_bin_right) * (depth_num-1)
-            # target_bin_right = torch.gather(bin_edges, 1, min(15, label_target_bin_right+1))
             target_bin_right = torch.gather(bin_edges, 1, torch.clamp_max(label_target_bin_right+2, right_max))
             
             
@@ -451,7 +441,6 @@ class AutoregressiveDepth(nn.Module):
             interval = torch.cat([torch.ones([b, 1, h, w], device=bin_edges.device) * depth_start_update, interval], 1)
 
             bin_edges = torch.cumsum(interval, 1).clamp(min_depth, max_depth)
-            curr_depth = 0.5 * (bin_edges[:, :-1] + bin_edges[:, 1:])
 
         return pred_depths_r_list, pred_depths_c_list, uncertainty_maps_list
 
@@ -564,16 +553,10 @@ class Decoder(nn.Module):
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False)
 
     def forward(self, conv_feats):
-        # import ipdb;ipdb.set_trace()
         out = self.deconv_layers(conv_feats)
-        # debug_mode('shape', out)
 
         out = self.conv_layers(out) ###2 192 128 160
-        # debug_mode('shape', out)
-
-        # out = self.up(out)
-        # out = self.up(out)
-
+ 
         return out
 
     def _make_deconv_layer(self, num_layers, num_filters, num_kernels):

@@ -403,10 +403,8 @@ class Decoder(nn.Module):
     def forward(self, conv_feats):
         # import ipdb;ipdb.set_trace()
         out = self.deconv_layers(conv_feats[0])
-        # debug_mode('shape', out)
 
         out_b = self.conv_layers(out) ###2 192 128 160
-        # debug_mode('shape', out)
 
         out = self.up(out_b)
         out = self.up(out)
@@ -495,7 +493,6 @@ class AutoRegDecoder(nn.Module):
                 self.upsample = nn.Upsample(size=(512, 640), mode='bilinear', align_corners=False)
 
     def forward(self, conv_feats, context, cond_feats=None):
-    # def forward(self, conv_feats, cond_feats, context):
 
         x = conv_feats[0]
         b, c, h, w = context.shape
@@ -538,14 +535,13 @@ class DAR(nn.Module):
 
         if args.encoder == 'VIT-14':
             self.encoder = DepthAnythingEncoder(features=320, out_channels=[256, 512, 1024, 1024], use_clstoken=False)
-            # patch_hws_list=[(4,5), (9,12), (18,24), (36,48)]
             patch_hws_list=[(4,5),(8,10),(12,15),(16,20)]
-            # patch_hws_list=[(4,5), (8,10), (16,20), (32,40)]
 
         elif args.encoder == 'VIT-16':
             self.encoder = EcoDepthEncoder(out_dim=1536, dataset='nyu', args = args)
-            # patch_hws_list=[(4,5), (8,10), (16,20), (32,40), (64,80)]
             patch_hws_list=[(4,5),(8,10),(12,15),(16,20)]
+
+
         self.depth_num = 16
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False)
         self.patch_hws_list = patch_hws_list
@@ -553,8 +549,7 @@ class DAR(nn.Module):
         q_dim=1536 #transformer dim
         context_dim=320 #feature map
         memory_dim=1536
-        # patch_hws_list=[(16,20), (32,40), (64, 80), (128, 160)]
-        # patch_hws_list=[(3,4), (6,8), (12,16), (24,32)]
+
 
         self.decoder = AutoRegDecoder(self.min_depth, self.max_depth, hidden_dim, q_dim, memory_dim, context_dim, patch_hws_list, channels_in, channels_out, args)
 
@@ -566,9 +561,7 @@ class DAR(nn.Module):
 
         conv_feats, context = self.encoder(x)
 
-        # context = F.interpolate(context, size=(conv_feats.shape[2]*2, conv_feats.shape[3]*2), mode='bilinear') # 4,320,120,160
         context = F.interpolate(context, size=(self.patch_hws_list[-1][0]*2, self.patch_hws_list[-1][1]*2), mode='bilinear') # 4,320,120,160
-        # context = F.interpolate(context, size=(128, 160), mode='bilinear') # 4,320,120,160
 
         pred_depths_r_list = self.decoder([conv_feats], context)
 
