@@ -49,7 +49,7 @@ class DepthAnythingEncoder(nn.Module):
         super().__init__()
         self.use_clstoken = use_clstoken
 
-        self.backbone = torch.hub.load('/ossfs/workspace/ts/wangjinhong/code/DepthAR/dar_final/networks/dinov2_main/', 'dinov2_vitl14', source='local', pretrained=False)
+        self.backbone = torch.hub.load('../tools/dinov2_main/', 'dinov2_vitl14', source='local', pretrained=False)
         in_channels = self.backbone.blocks[0].attn.qkv.in_features
         
 
@@ -161,7 +161,8 @@ class DepthAnythingEncoder(nn.Module):
         """
 
         if pretrained == None: 
-            pretrained = '/ossfs/workspace/ts/wangjinhong/code/Ecodepth/checkpoints/depth_anything_vitl14.pth'
+            pretrained = '../checkpoints/depth_anything_vitl14.pth'
+
         print(f'== Load encoder backbone from: {pretrained}')
      
         pretrained_net_dict = torch.load(pretrained)
@@ -261,7 +262,7 @@ class EcoDepthEncoder(nn.Module):
         
         self.config = OmegaConf.load('./v1-inference.yaml')
         if sd_path is None:
-            self.config.model.params.ckpt_path = '/ossfs/workspace/ts/wangjinhong/code/Ecodepth/checkpoints/v1-5-pruned-emaonly.ckpt'
+            self.config.model.params.ckpt_path = '../checkpoints/v1-5-pruned-emaonly.ckpt'
         else:
             self.config.model.params.ckpt_path = f'../{sd_path}'
 
@@ -315,10 +316,12 @@ class CIDE(nn.Module):
     def __init__(self, args, emb_dim):
         super().__init__()
         self.args = args
-        self.vit_processor = ViTImageProcessor.from_pretrained('/ossfs/workspace/hy58/caijin/huggingface_hub/google_vit')
-        self.vit_model = ViTForImageClassification.from_pretrained('/ossfs/workspace/hy58/caijin/huggingface_hub/google_vit')
-        # self.vit_processor = ViTImageProcessor.from_pretrained('/.../huggingface_hub/google_vit')
-        # self.vit_model = ViTForImageClassification.from_pretrained('/.../huggingface_hub/google_vit')
+
+        ### Load local CLIP ViT model
+        self.vit_processor = ViTImageProcessor.from_pretrained('../tools/huggingface_hub/google_vit')
+        self.vit_model = ViTForImageClassification.from_pretrained('../tools/huggingface_hub/google_vit')
+
+        ### Load online CLIP ViT model
         # self.vit_processor = ViTImageProcessor.from_pretrained(args.vit_model, resume_download=True)
         # self.vit_model = ViTForImageClassification.from_pretrained(args.vit_model, resume_download=True)
         for param in self.vit_model.parameters():
