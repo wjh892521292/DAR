@@ -161,7 +161,7 @@ class DepthAnythingEncoder(nn.Module):
         """
 
         if pretrained == None: 
-            pretrained = '/ossfs/workspace/ts/wangjinhong/code/Ecodepth/checkpoints/depth_anything_vitl14.pth'
+            pretrained = '/ossfs/workspace/ts/wangjinhong/code/dar/checkpoints/depth_anything_vitl14.pth'
         print(f'== Load encoder backbone from: {pretrained}')
      
         pretrained_net_dict = torch.load(pretrained)
@@ -261,7 +261,7 @@ class EcoDepthEncoder(nn.Module):
         
         self.config = OmegaConf.load('./v1-inference.yaml')
         if sd_path is None:
-            self.config.model.params.ckpt_path = '/ossfs/workspace/ts/wangjinhong/code/Ecodepth/checkpoints/v1-5-pruned-emaonly.ckpt'
+            self.config.model.params.ckpt_path = '/ossfs/workspace/ts/wangjinhong/code/dar/checkpoints/v1-5-pruned-emaonly.ckpt'
         else:
             self.config.model.params.ckpt_path = f'../{sd_path}'
 
