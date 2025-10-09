@@ -69,7 +69,7 @@ kitti
 
 Download the v1-5 checkpoint of [stable-diffusion](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.ckpt) and put it in the `<repo root>/checkpoints` directory. Please create an empty directory if you find that such a path does not exist. 
 
-- (Optional) We load model weights of pretrained visual backbones **locally**. Therefore, it is necessary to download the backbone repository and weights. 
+- (Optional) If you need to load model weights of pretrained visual backbones **locally**. You can download the backbone repository (e.g., dinov2) and put it in the `<repo root>/tools`. Notebly, model weights are recommanded to be at `<repo root>/checkpoints` directory. 
 
 ## Training 
 We recommend using 8 NVIDIA A100 GPUs to train the model with a total batch size of 32. Inside the `train_{kitti,nyu}.sh` set the `NPROC_PER_NODE` variable and `--batch_size` argument to the desired values as per your system resources. For our method we set them as `NPROC_PER_NODE=8` and `--batch_size=4` (resulting in a total batch size of 32). Run the following instuction to train the DAR model:

@@ -318,12 +318,12 @@ class CIDE(nn.Module):
         self.args = args
 
         ### Load local CLIP ViT model
-        self.vit_processor = ViTImageProcessor.from_pretrained('../tools/huggingface_hub/google_vit')
-        self.vit_model = ViTForImageClassification.from_pretrained('../tools/huggingface_hub/google_vit')
+        # self.vit_processor = ViTImageProcessor.from_pretrained('../tools/huggingface_hub/google_vit')
+        # self.vit_model = ViTForImageClassification.from_pretrained('../tools/huggingface_hub/google_vit')
 
         ### Load online CLIP ViT model
-        # self.vit_processor = ViTImageProcessor.from_pretrained(args.vit_model, resume_download=True)
-        # self.vit_model = ViTForImageClassification.from_pretrained(args.vit_model, resume_download=True)
+        self.vit_processor = ViTImageProcessor.from_pretrained(args.vit_model, resume_download=True)
+        self.vit_model = ViTForImageClassification.from_pretrained(args.vit_model, resume_download=True)
         for param in self.vit_model.parameters():
             param.requires_grad = False
         
@@ -570,7 +570,7 @@ class DAR(nn.Module):
         context = F.interpolate(context, size=(self.patch_hws_list[-1][0]*2, self.patch_hws_list[-1][1]*2), mode='bilinear') # 4,320,120,160
         # context = F.interpolate(context, size=(128, 160), mode='bilinear') # 4,320,120,160
 
-        pred_depths_r_list, pred_depths_c_list, uncertainty_maps_list = self.decoder([conv_feats], context)
+        pred_depths_r_list = self.decoder([conv_feats], context)
 
         return {'pred_d': pred_depths_r_list}
 
