@@ -1,13 +1,21 @@
 # Scalable Autoregressive Monocular Depth Estimation
 
-comming soon.
-
+## News 
+- [Jun 2025] Code released.
+- [Feb 2025] DAR accepted in CVPR'2025.
+  
 ## Installation
 
-comming soon.
+```python
+git clone https://github.com/wjh892521292/DAR
+cd DAR
+conda env create -f requirements.yml
+conda activate dar
+```
 
 
-## Usage
+
+## Training
 
 ```python
 comming soon.
